@@ -8,13 +8,15 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001' && react-native start"
+    "codegen": "apollo service:download --endpoint=https://frozen-river-77426.herokuapp.com/query && apollo client:codegen src/types/graphql.ts --includes='src/**/*.ts' --localSchemaFile=schema.json --outputFlat --target=typescript"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.14",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.9",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
+    "graphql": "^15.5.0",
     "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-design-utility": "^1.0.9",
