@@ -56,7 +56,11 @@ const SearchScreen = () => {
           ListHeaderComponent={<>{loading && <SearchLoading />}</>}
           ListEmptyComponent={<>{!loading && <SearchEmpty />}</>}
           renderItem={({item}) => <SearchTile item={item} />}
-          keyExtractor={item => String(item.feedUrl)}
+          keyExtractor={item =>
+            String(
+              `${item.feedUrl}${item.podcastName}${item.thumbnail}${item.episodesCount}`,
+            )
+          }
         />
       )}
     </Box>
