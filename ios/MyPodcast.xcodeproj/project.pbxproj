@@ -39,6 +39,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MyPodcast/main.m; sourceTree = "<group>"; };
 		2F02EA7376DA5AEF732ACD53 /* Pods-MyPodcast-MyPodcastTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPodcast-MyPodcastTests.debug.xcconfig"; path = "Target Support Files/Pods-MyPodcast-MyPodcastTests/Pods-MyPodcast-MyPodcastTests.debug.xcconfig"; sourceTree = "<group>"; };
 		71180E3C2623DBFE00366EB0 /* MyPodcast.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MyPodcast.entitlements; path = MyPodcast/MyPodcast.entitlements; sourceTree = "<group>"; };
+		7150D0172642ECB70097E89A /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MyPodcast/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C191AF48D3D44B3E7E4B64EA /* libPods-MyPodcast.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyPodcast.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB4A9558253EB5CF821FFECD /* Pods-MyPodcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPodcast.release.xcconfig"; path = "Target Support Files/Pods-MyPodcast/Pods-MyPodcast.release.xcconfig"; sourceTree = "<group>"; };
@@ -87,6 +88,7 @@
 		13B07FAE1A68108700A75B9A /* MyPodcast */ = {
 			isa = PBXGroup;
 			children = (
+				7150D0162642EC510097E89A /* Fonts */,
 				71180E3C2623DBFE00366EB0 /* MyPodcast.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -106,6 +108,14 @@
 				E4E3106745310D5C1EBFFA8D /* libPods-MyPodcast-MyPodcastTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7150D0162642EC510097E89A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				7150D0172642ECB70097E89A /* Foundation.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {

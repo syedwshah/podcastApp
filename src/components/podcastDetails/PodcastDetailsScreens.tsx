@@ -2,6 +2,8 @@ import {RouteProp, useRoute} from '@react-navigation/core';
 import React from 'react';
 import {FlatList, Image, StyleSheet} from 'react-native';
 import {Box, Text} from 'react-native-design-utility';
+import Icon from 'react-native-vector-icons/Feather';
+import {theme} from '../../constants/theme';
 
 import {SearchStackRouteParamsList} from '../../navigators/types';
 
@@ -35,8 +37,14 @@ const PodcastDetailsScreen = () => {
                 </Text>
               </Box>
             </Box>
-            <Box px="xs" mb="md">
-              <Text>Play last episode</Text>
+            <Box px="xs" mb="md" dir="row" align="center">
+              <Box mr={10}>
+                <Icon name="play" size={30} color={theme.color.blueLight} />
+              </Box>
+              <Box>
+                <Text bold>Play</Text>
+                <Text size="sm">#400 - The Last Episode</Text>
+              </Box>
             </Box>
 
             <Box px="sm" mb="md">
