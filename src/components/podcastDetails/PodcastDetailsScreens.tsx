@@ -1,36 +1,46 @@
 import {RouteProp, useRoute} from '@react-navigation/core';
 import React from 'react';
-import {FlatList, Image, StyleSheet} from 'react-native';
+import {ActivityIndicator, FlatList, Image, StyleSheet} from 'react-native';
 import {Box, Text} from 'react-native-design-utility';
 import Icon from 'react-native-vector-icons/Feather';
-import {theme} from '../../constants/theme';
+import {useQuery} from '@apollo/client';
 
 import {SearchStackRouteParamsList} from '../../navigators/types';
+import {theme} from '../../constants/theme';
+import {FeedQuery, FeedQueryVariables} from '../../types/graphql';
+import feedQuery from '../../graphql/query/feedQuery';
+import {getWeekDay, humanDuration} from '../../lib/dateTimeHelpers';
 
 type NavigationParams = RouteProp<SearchStackRouteParamsList, 'PodcastDetails'>;
 
 const PodcastDetailsScreen = () => {
-  const {data} = useRoute<NavigationParams>()?.params ?? {};
+  const {data: podcastData} = useRoute<NavigationParams>()?.params ?? {};
+
+  const {data, loading} = useQuery<FeedQuery, FeedQueryVariables>(feedQuery, {
+    variables: {
+      feedUrl: podcastData.feedUrl,
+    },
+  });
   return (
     <Box f={1} bg="white">
       <FlatList
         ListHeaderComponent={
           <>
             <Box dir="row" px="sm" mt="sm" mb="md">
-              {data.thumbnail && (
+              {podcastData.thumbnail && (
                 <Box mr={10}>
                   <Image
-                    source={{uri: data.thumbnail}}
+                    source={{uri: podcastData.thumbnail}}
                     style={styles.thumbnail}
                   />
                 </Box>
               )}
               <Box f={1}>
                 <Text size="lg" bold>
-                  {data.podcastName}
+                  {podcastData.podcastName}
                 </Text>
                 <Text size="xs" color="grey">
-                  {data.artist}
+                  {podcastData.artist}
                 </Text>
                 <Text color="blueLight" size="xs">
                   Subscribed
@@ -41,9 +51,9 @@ const PodcastDetailsScreen = () => {
               <Box mr={10}>
                 <Icon name="play" size={30} color={theme.color.blueLight} />
               </Box>
-              <Box>
+              <Box f={1}>
                 <Text bold>Play</Text>
-                <Text size="sm">#400 - The Last Episode</Text>
+                <Text size="sm">{data?.feed[0].title}</Text>
               </Box>
             </Box>
 
@@ -52,33 +62,38 @@ const PodcastDetailsScreen = () => {
                 Episodes
               </Text>
             </Box>
+
+            {loading && (
+              <Box h={200} center>
+                <ActivityIndicator size="large" color={theme.color.blueLight} />
+              </Box>
+            )}
           </>
         }
-        data={[{id: '1'}, {id: '2'}]}
+        data={data?.feed}
         ItemSeparatorComponent={() => (
           <Box w="100%" px="sm" my="sm">
             <Box bg="greyLighter" style={{height: StyleSheet.hairlineWidth}} />
           </Box>
         )}
-        renderItem={() => (
+        renderItem={({item}) => (
           <Box px="xs">
             <Text size="xs" color="grey">
-              FRIDAY
+              {getWeekDay(new Date(item.pubDate)).toUpperCase()}
             </Text>
-            <Text bold>#400 - The Title</Text>
+            <Text bold>{item.title}</Text>
             <Text size="sm" color="grey" numberOfLines={2}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Voluptatem, temporibus consectetur iusto recusandae doloremque
-              nulla quam, beatae, repellendus nobis voluptatibus numquam
-              consequatur maiores tenetur delectus placeat animi aut
-              reprehenderit fugit!
+              {item.description
+                .replace(/<[^>]*>/g, ' ')
+                .replace(/\s{2,}/g, ' ')
+                .trim()}
             </Text>
             <Text size="sm" color="grey">
-              3hrs. 13min
+              {humanDuration(item.duration)}
             </Text>
           </Box>
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.linkUrl}
       />
     </Box>
   );
