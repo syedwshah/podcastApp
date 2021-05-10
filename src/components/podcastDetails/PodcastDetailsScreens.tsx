@@ -10,10 +10,13 @@ import {theme} from '../../constants/theme';
 import {FeedQuery, FeedQueryVariables} from '../../types/graphql';
 import feedQuery from '../../graphql/query/feedQuery';
 import {getWeekDay, humanDuration} from '../../lib/dateTimeHelpers';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {usePlayerContext} from '../../contexts/PlayerContext';
 
 type NavigationParams = RouteProp<SearchStackRouteParamsList, 'PodcastDetails'>;
 
 const PodcastDetailsScreen = () => {
+  const playerContext = usePlayerContext();
   const {data: podcastData} = useRoute<NavigationParams>()?.params ?? {};
 
   const {data, loading} = useQuery<FeedQuery, FeedQueryVariables>(feedQuery, {
@@ -49,7 +52,23 @@ const PodcastDetailsScreen = () => {
             </Box>
             <Box px="xs" mb="md" dir="row" align="center">
               <Box mr={10}>
-                <Icon name="play" size={30} color={theme.color.blueLight} />
+                <TouchableOpacity
+                  onPress={() => {
+                    const el = data?.feed[0];
+
+                    if (!el) {
+                      return;
+                    }
+                    playerContext.play({
+                      title: el.title,
+                      artwork: el.image ?? podcastData.thumbnail,
+                      id: el.linkUrl,
+                      url: el.linkUrl,
+                      artist: podcastData.artist,
+                    });
+                  }}>
+                  <Icon name="play" size={30} color={theme.color.blueLight} />
+                </TouchableOpacity>
               </Box>
               <Box f={1}>
                 <Text bold>Play</Text>
