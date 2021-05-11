@@ -15,6 +15,7 @@ interface PlayerContextType {
   currentTrack: Track | null;
   play: (track?: Track) => void;
   pause: () => void;
+  seekTo: (amount?: number) => void;
 }
 
 export const PlayerContext = React.createContext<PlayerContextType>({
@@ -25,6 +26,7 @@ export const PlayerContext = React.createContext<PlayerContextType>({
   currentTrack: null,
   play: () => null,
   pause: () => null,
+  seekTo: () => null,
 });
 
 export const PlayerContextProvider: React.FC = (
@@ -33,6 +35,8 @@ export const PlayerContextProvider: React.FC = (
   const [playerState, setPlayerState] = React.useState<null | TrackPlayerState>(
     null,
   );
+
+  // console.log('player-state', playerState);
 
   const [currentTrack, setCurrentTrack] = React.useState<null | Track>(null);
 
@@ -66,6 +70,11 @@ export const PlayerContextProvider: React.FC = (
     await RNTrackPlayer.pause();
   };
 
+  const seekTo = async (amount: number = 30) => {
+    const position = await RNTrackPlayer.getPosition();
+    await RNTrackPlayer.seekTo(position + amount);
+  };
+
   const value: PlayerContextType = {
     isPlaying: playerState === STATE_PLAYING,
     isPaused: playerState === STATE_PAUSED,
@@ -74,6 +83,7 @@ export const PlayerContextProvider: React.FC = (
     currentTrack,
     play,
     pause,
+    seekTo,
   };
 
   return (
