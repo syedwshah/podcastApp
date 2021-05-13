@@ -111,7 +111,7 @@ const PodcastDetailsScreen = () => {
               <Text bold>{item.title}</Text>
             </TouchableOpacity>
             <Text size="sm" color="grey" numberOfLines={2}>
-              {item.description
+              {item.summary
                 .replace(/<[^>]*>/g, ' ')
                 .replace(/\s{2,}/g, ' ')
                 .trim()}

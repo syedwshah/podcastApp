@@ -8,7 +8,9 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import {theme} from '../../constants/theme';
 import {usePlayerContext} from '../../contexts/PlayerContext';
+import {humanDuration} from '../../lib/dateTimeHelpers';
 import {FeedQuery_feed, SearchQuery_search} from '../../types/graphql';
+import HtmlReader from '../HtmlReader';
 
 const EpisodeDetailsScreen = () => {
   const playerContext = usePlayerContext();
@@ -57,7 +59,7 @@ const EpisodeDetailsScreen = () => {
                 Play
               </Text>
               <Text color="grey" size="xs">
-                {routeParams.episode.duration}
+                {humanDuration(routeParams.episode.duration)}
               </Text>
             </Box>
           </Box>
@@ -68,7 +70,7 @@ const EpisodeDetailsScreen = () => {
             <Text size="xl" weight="bold">
               Episode Notes
             </Text>
-            <Text>{routeParams.episode.description}</Text>
+            <HtmlReader html={routeParams.episode.description} />
           </Box>
         </Box>
       </ScrollView>
