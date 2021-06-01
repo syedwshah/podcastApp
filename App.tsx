@@ -11,7 +11,9 @@ import {client} from './src/graphql/client';
 
 import {ActivityIndicator} from 'react-native';
 import {PlayerContextProvider} from './src/contexts/PlayerContext';
+import {DBProvider} from './src/contexts/DBContext';
 
+/*Sample of what data may look like: */
 // const track = {
 //   id: 1,
 //   url: 'https://media.transistor.fm/39765eda/0e219b35.mp3',
@@ -45,19 +47,21 @@ const App = () => {
   }, []);
   return (
     <UtilityThemeProvider theme={theme}>
-      <ApolloProvider client={client}>
-        {isReady ? (
-          <PlayerContextProvider>
-            <NavigationContainer>
-              <MainStackNavigator />
-            </NavigationContainer>
-          </PlayerContextProvider>
-        ) : (
-          <Box f={1} center>
-            <ActivityIndicator />
-          </Box>
-        )}
-      </ApolloProvider>
+      <DBProvider>
+        <ApolloProvider client={client}>
+          {isReady ? (
+            <PlayerContextProvider>
+              <NavigationContainer>
+                <MainStackNavigator />
+              </NavigationContainer>
+            </PlayerContextProvider>
+          ) : (
+            <Box f={1} center>
+              <ActivityIndicator />
+            </Box>
+          )}
+        </ApolloProvider>
+      </DBProvider>
     </UtilityThemeProvider>
   );
 };
