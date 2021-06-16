@@ -8,6 +8,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {usePlayerContext} from '../../contexts/PlayerContext';
 import {theme} from '../../constants/theme';
+import ProgressSlider from './ProgressSlider';
 
 const {width} = Dimensions.get('window');
 
@@ -44,6 +45,10 @@ const PlayerScreen = () => {
             {track.title}
           </Text>
           <Text color="grey">{track.artist}</Text>
+        </Box>
+
+        <Box px="md" mb="sm">
+          <ProgressSlider />
         </Box>
 
         <Box dir="row" center>
