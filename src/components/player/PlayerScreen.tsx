@@ -9,6 +9,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {usePlayerContext} from '../../contexts/PlayerContext';
 import {theme} from '../../constants/theme';
 import ProgressSlider from './ProgressSlider';
+import {makeHitSlop} from '../../constants/metrics';
 
 const {width} = Dimensions.get('window');
 
@@ -25,16 +26,17 @@ const PlayerScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Box f={1} bg="white" pt="md">
-        <Box px="md" mb="md">
+        <Box px="md" mb="md" dir="row" align="center" justify="between">
           <TouchableOpacity
             onPress={navigation.goBack}
-            hitSlop={{
-              top: 20,
-              bottom: 20,
-              left: 20,
-              right: 20,
-            }}>
+            hitSlop={makeHitSlop(20)}>
             <Icon name="chevron-down" size={30} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Queue')}
+            hitSlop={makeHitSlop(20)}>
+            <Icon name="list" size={30} />
           </TouchableOpacity>
         </Box>
         <Box center mb="md">
