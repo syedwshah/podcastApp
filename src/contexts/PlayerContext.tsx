@@ -16,7 +16,7 @@ interface PlayerContextType {
   play: (track?: Track) => void;
   pause: () => void;
   seekTo: (amount?: number) => void;
-  goTo: (amount: number) => null;
+  goTo: (amount: number) => void;
 }
 
 export const PlayerContext = React.createContext<PlayerContextType>({
