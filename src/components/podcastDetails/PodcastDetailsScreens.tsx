@@ -62,7 +62,7 @@ const PodcastDetailsScreen = () => {
                     )
                   }>
                   <Text color="blueLight" size="xs">
-                    Subscribed
+                    Subscribe
                   </Text>
                 </TouchableOpacity>
               </Box>

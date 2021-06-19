@@ -38,8 +38,6 @@ export const PlayerContextProvider: React.FC = (
     null,
   );
 
-  // console.log('player-state', playerState);
-
   const [currentTrack, setCurrentTrack] = React.useState<null | Track>(null);
 
   React.useEffect(() => {
@@ -56,6 +54,8 @@ export const PlayerContextProvider: React.FC = (
   }, []);
 
   const play = async (track?: Track) => {
+    //Stop current track before playing next track
+    await pause();
     if (!track) {
       if (currentTrack) {
         await RNTrackPlayer.play();
@@ -63,13 +63,21 @@ export const PlayerContextProvider: React.FC = (
       return;
     }
 
-    if (currentTrack && track.id !== currentTrack.id) {
+    if (currentTrack && track.id === currentTrack.id) {
       await RNTrackPlayer.reset();
+      return;
     }
 
-    await RNTrackPlayer.add([track]);
-    setCurrentTrack(track);
-    await RNTrackPlayer.play();
+    try {
+      //check if yhe track exists in the queue
+      await RNTrackPlayer.getTrack(track.id);
+    } catch (error) {
+      await RNTrackPlayer.add([track]);
+    } finally {
+      setCurrentTrack(track);
+      await RNTrackPlayer.skip(track.id);
+      await RNTrackPlayer.play();
+    }
   };
 
   const pause = async () => {
